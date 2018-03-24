@@ -20,7 +20,7 @@ setup(
 
     packages=['django_file_upload'],
     py_modules=[],
-    install_requires=['django-file-md5', 'django-response'],
+    install_requires=['django-file-md5>=1.0.2', 'django_logit>=1.1.2', 'django-response'],
 
     classifiers=[
         'Development Status :: 5 - Production/Stable',

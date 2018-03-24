@@ -6,9 +6,9 @@ import os
 
 from django.conf import settings
 from django.core.files.storage import default_storage
+from django_file_md5 import calculate_md5
+from django_logit import logit
 from django_response import response
-from filemd5 import calculate_md5
-from logit import logit
 
 
 @logit
