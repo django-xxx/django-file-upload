@@ -9,6 +9,7 @@ from django.core.files.storage import default_storage
 from django_file_md5 import calculate_md5
 from django_logit import logit
 from django_response import response
+from TimeConvert import TimeConvert as tc
 
 
 @logit
@@ -24,7 +25,9 @@ def file_upload(request):
     ext = os.path.splitext(file_.name)[-1]
 
     # File Path
-    file_path = '{0}/{1}{2}'.format('file', calculate_md5(file_), ext)
+    base_path = settings.DJANGO_FILE_UPLOAD_BASE_PATH if hasattr(settings, 'DJANGO_FILE_UPLOAD_BASE_PATH') else 'file'
+    ym_path = tc.local_string(format='%Y%m') if hasattr(settings, 'DJANGO_FILE_UPLOAD_USE_YM') and settings.DJANGO_FILE_UPLOAD_USE_YM else ''
+    file_path = '{0}/{1}{2}{3}{4}'.format(base_path, ym_path, ym_path and '/', calculate_md5(file_), ext)
 
     # File Save
     if not default_storage.exists(file_path):
