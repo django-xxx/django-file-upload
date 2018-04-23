@@ -24,10 +24,15 @@ def file_upload(request):
     # File Ext
     ext = os.path.splitext(file_.name)[-1]
 
-    # File Path
+    # Joint File Path
+    # Base Path
     base_path = settings.DJANGO_FILE_UPLOAD_BASE_PATH if hasattr(settings, 'DJANGO_FILE_UPLOAD_BASE_PATH') else 'file'
+    # YM Path
     ym_path = tc.local_string(format='%Y%m') if hasattr(settings, 'DJANGO_FILE_UPLOAD_USE_YM') and settings.DJANGO_FILE_UPLOAD_USE_YM else ''
-    file_path = '{0}/{1}{2}{3}{4}'.format(base_path, ym_path, ym_path and '/', calculate_md5(file_), ext)
+    # File Name
+    file_name = tc.local_string(format='%Y%m%d%H%M%S') if hasattr(settings, 'DJANGO_FILE_UPLOAD_USE_DT') and settings.DJANGO_FILE_UPLOAD_USE_DT else calculate_md5(file_)
+    # File Path
+    file_path = '{0}/{1}{2}{3}{4}'.format(base_path, ym_path, ym_path and '/', file_name, ext)
 
     # File Save
     if not default_storage.exists(file_path):
