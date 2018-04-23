@@ -3,7 +3,7 @@
 from setuptools import setup
 
 
-version = '1.0.2'
+version = '1.0.3'
 
 
 setup(
@@ -20,7 +20,7 @@ setup(
 
     packages=['django_file_upload'],
     py_modules=[],
-    install_requires=['TimeConvert', 'django-file-md5>=1.0.2', 'django_logit>=1.1.2', 'django-response'],
+    install_requires=['TimeConvert', 'django-file-md5>=1.0.3', 'django_logit>=1.1.2', 'django-response'],
 
     classifiers=[
         'Development Status :: 5 - Production/Stable',
