@@ -38,7 +38,13 @@ def file_upload(request):
     if not default_storage.exists(file_path):
         default_storage.save(file_path, file_)
 
+    # File URL
+    file_url = '{0}{1}'.format(settings.DOMAIN if hasattr(settings, 'DOMAIN') else '', default_storage.url(file_path))
+
+    if hasattr(settings, 'DJANGO_FILE_UPLOAD_CALLBACK_FUNC') and hasattr(settings.DJANGO_FILE_UPLOAD_CALLBACK_FUNC, '__call__'):
+        settings.DJANGO_FILE_UPLOAD_CALLBACK_FUNC(request, file_path, file_url)
+
     return response(200, 'File Upload Success', u'文件上传成功', data={
         'file_path': file_path,
-        'file_url': '{0}{1}'.format(settings.DOMAIN if hasattr(settings, 'DOMAIN') else '', default_storage.url(file_path)),
+        'file_url': file_url,
     })
