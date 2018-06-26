@@ -16,7 +16,7 @@ from TimeConvert import TimeConvert as tc
 def file_upload(request):
     # File Not Found
     if not request.FILES:
-        return response(settings.FILE_NOT_FOUND if hasattr(settings, 'FILE_NOT_FOUND') else 999999)
+        return response(settings.DJANGO_FILE_UPLOAD_FILE_NOT_FOUND if hasattr(settings, 'DJANGO_FILE_UPLOAD_FILE_NOT_FOUND') else 999999)
 
     # File Object
     file_ = request.FILES.get('file', '')
