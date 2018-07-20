@@ -20,7 +20,7 @@ setup(
 
     packages=['django_file_upload'],
     py_modules=[],
-    install_requires=['TimeConvert', 'django-file-md5>=1.0.2', 'django_logit>=1.1.2', 'django-response'],
+    install_requires=['TimeConvert', 'django-file-md5>=1.0.2', 'django_logit>=1.1.2', 'django_query', 'django-response'],
 
     classifiers=[
         'Development Status :: 5 - Production/Stable',
