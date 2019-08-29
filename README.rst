@@ -18,7 +18,7 @@ Urls.py
 ::
 
     urlpatterns = [
-        url(r'^f/', include('django_file_upload.urls', namespace='fileupload')),
+        url(r'^f/', include('django_file_upload.urls', namespace='django_file_upload')),
     ]
 
 
