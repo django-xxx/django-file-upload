@@ -34,7 +34,11 @@ def file_upload(request):
 
         # Joint File Path
         # Base Path
-        base_path = settings.DJANGO_FILE_UPLOAD_BASE_PATH if hasattr(settings, 'DJANGO_FILE_UPLOAD_BASE_PATH') else 'file'
+        if hasattr(settings, 'DJANGO_FILE_UPLOAD_BASE_PATH'):
+            base_path = settings.DJANGO_FILE_UPLOAD_BASE_PATH
+        if hasattr(settings, 'DJANGO_FILE_UPLOAD_BASE_PATH_CALLBACK_FUNC') and hasattr(settings.DJANGO_FILE_UPLOAD_BASE_PATH_CALLBACK_FUNC, '__call__'):
+            base_path = settings.DJANGO_FILE_UPLOAD_BASE_PATH_CALLBACK_FUNC(request)
+        base_path = base_path or 'file'
         # YM Path
         ym_path = tc.local_string(format='%Y%m') if hasattr(settings, 'DJANGO_FILE_UPLOAD_USE_YM') and settings.DJANGO_FILE_UPLOAD_USE_YM else ''
         # File Name
