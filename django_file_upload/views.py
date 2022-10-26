@@ -44,18 +44,23 @@ def file_upload(request):
         # File Path
         file_path = '{0}/{1}{2}{3}{4}'.format(base_path, ym_path, ym_path and '/', file_name, ext)
 
-        # File Save
-        if not default_storage.exists(file_path):
-            default_storage.save(file_path, file_)
+        # File Save/URL call `DJANGO_FILE_UPLOAD_STORAGE_FUNC`
+        storage_resp = {}
+        if hasattr(settings, 'DJANGO_FILE_UPLOAD_STORAGE_FUNC') and hasattr(settings.DJANGO_FILE_UPLOAD_STORAGE_FUNC, '__call__'):
+            storage_resp = settings.DJANGO_FILE_UPLOAD_STORAGE_FUNC(request, file_path) or {}
 
-        # File URL
-        file_url = '{0}{1}'.format(settings.DOMAIN if hasattr(settings, 'DOMAIN') else '', default_storage.url(file_path))
+        # File Save/URL call `default_storage`
+        if not storage_resp.get('file_url'):
+            if not default_storage.exists(file_path):
+                default_storage.save(file_path, file_)
+            file_url = '{0}{1}'.format(settings.DOMAIN if hasattr(settings, 'DOMAIN') else '', default_storage.url(file_path))
+            storage_resp['file_url'] = file_url
+
+        if 'file_path' not in storage_resp:
+            storage_resp['file_path'] = file_path
 
     callback_resp = {}
     if hasattr(settings, 'DJANGO_FILE_UPLOAD_CALLBACK_FUNC') and hasattr(settings.DJANGO_FILE_UPLOAD_CALLBACK_FUNC, '__call__'):
         callback_resp = settings.DJANGO_FILE_UPLOAD_CALLBACK_FUNC(request, file_path, file_url) or {}
 
-    return response(200, 'File Upload Success', u'文件上传成功', data=dict(callback_resp, **{
-        'file_path': file_path,
-        'file_url': file_url,
-    }))
+    return response(200, 'File Upload Success', u'文件上传成功', data=dict(storage_resp, **callback_resp))

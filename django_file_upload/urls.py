@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.conf.urls import url
+
 from django_file_upload import views as file_views
 
 
