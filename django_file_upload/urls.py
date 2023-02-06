@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.urls import re_path
+from django_six import re_path
 
 from django_file_upload import views as file_views
 
