@@ -11,7 +11,8 @@ setup(
     version=version,
     keywords='Django File Upload',
     description='Django File Upload',
-    long_description=open('README.rst').read(),
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
 
     url='https://github.com/django-xxx/django-file-upload',
 
@@ -20,7 +21,7 @@ setup(
 
     packages=['django_file_upload'],
     py_modules=[],
-    install_requires=['TimeConvert', 'django-file-md5>=1.0.2', 'django_logit>=1.1.2', 'django_query', 'django-response'],
+    install_requires=['TimeConvert', 'django-file-md5>=1.0.2', 'django_logit>=1.1.2', 'django_query', 'django-response', 'django-six'],
 
     classifiers=[
         'Development Status :: 5 - Production/Stable',
